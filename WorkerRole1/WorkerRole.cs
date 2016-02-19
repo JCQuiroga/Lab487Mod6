@@ -1,15 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
+using Newtonsoft.Json;
 
 namespace WorkerRole1
 {
@@ -17,11 +22,25 @@ namespace WorkerRole1
     {
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
+        private int ms = 10000;
+        private string dest;
+        private string url;
 
         public override void Run()
         {
             Trace.TraceInformation("WorkerRole1 is running");
-
+            while (true)
+            {
+                Thread.Sleep(ms);
+                var c = new Correo()
+                {
+                    Asunto = "Mensaje worker",
+                    Destino = dest,
+                    Origen = "abc@def.com",
+                    Contenido = "Mensaje de prueba"
+                };
+                Enviar(c);
+            }
             try
             {
                 this.RunAsync(this.cancellationTokenSource.Token).Wait();
@@ -30,6 +49,7 @@ namespace WorkerRole1
             {
                 this.runCompleteEvent.Set();
             }
+
         }
 
         public override bool OnStart()
@@ -37,9 +57,9 @@ namespace WorkerRole1
             // Set the maximum number of concurrent connections
             ServicePointManager.DefaultConnectionLimit = 12;
 
-            // For information on handling configuration changes
-            // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
-
+            int.TryParse(ConfigurationManager.AppSettings["tiempo"], out ms);
+            url = ConfigurationManager.AppSettings["url"];
+            dest = ConfigurationManager.AppSettings["destino"];
             bool result = base.OnStart();
 
             Trace.TraceInformation("WorkerRole1 has been started");
@@ -67,6 +87,14 @@ namespace WorkerRole1
                 Trace.TraceInformation("Working");
                 await Task.Delay(1000);
             }
+        }
+
+        protected async Task Enviar(Correo c)
+        {
+            string postBody = JsonConvert.SerializeObject(c);
+            HttpClient cl = new HttpClient();
+            cl.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage wcfResponse = await cl.PostAsync(url, new StringContent(postBody, Encoding.UTF8, "application/json"));
         }
     }
 }
