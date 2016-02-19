@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Lab487Mod6", "Lab487Mod6\Lab487Mod6.ccproj", "{2F4A654C-B522-4809-B2B7-602BE8E2F6AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerRole1", "WorkerRole1\WorkerRole1.csproj", "{AF4F468C-65AC-467D-B460-EA089516CC36}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F4A654C-B522-4809-B2B7-602BE8E2F6AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F4A654C-B522-4809-B2B7-602BE8E2F6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F4A654C-B522-4809-B2B7-602BE8E2F6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F4A654C-B522-4809-B2B7-602BE8E2F6AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF4F468C-65AC-467D-B460-EA089516CC36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF4F468C-65AC-467D-B460-EA089516CC36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF4F468C-65AC-467D-B460-EA089516CC36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF4F468C-65AC-467D-B460-EA089516CC36}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
